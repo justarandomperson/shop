@@ -41,9 +41,11 @@ form {
 }
 
 .main-header__nav {
-  height: 100%;
   display: none;
   align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
 }
 
 .main-header__item-list {
@@ -63,9 +65,19 @@ form {
   color: white;
 }
 
+.main-header__item button{
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.05em;
+}
+
 .main-header__item a:hover,
 .main-header__item a:active,
-.main-header__item a.active {
+.main-header__item a.active,
+.main-header__item button:active,
+.main-header__item button:hover {
+  cursor: pointer;
   color: #ffeb3b;
 }
 
@@ -88,9 +100,9 @@ form {
 }
 
 .mobile-nav__item-list {
-  list-style: none;
   display: flex;
   flex-direction: column;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
@@ -100,7 +112,7 @@ form {
   padding: 0;
 }
 
-.mobile-nav__item a {
+.mobile-nav__item a, .mobile-nav__item button {
   text-decoration: none;
   color: black;
   font-size: 1.5rem;
@@ -109,7 +121,9 @@ form {
 
 .mobile-nav__item a:active,
 .mobile-nav__item a:hover,
-.mobile-nav__item a.active {
+.mobile-nav__item a.active,
+.mobile-nav__item button:active,
+.mobile-nav__item button:hover {
   background: #00695c;
   color: white;
   border-radius: 3px;
@@ -213,4 +227,20 @@ form {
   #side-menu-toggle {
     display: none;
   }
+}
+
+
+.user-message {
+  margin: auto;
+  text-align: center;
+  padding: .75em;
+  font-size: 1.1em;
+  width: 20em;
+  background-color: lime;
+  border: 1px solid green
+}
+
+.user-message--error {
+  background-color: rgb(221, 109, 109);
+  border-color: red;
 }

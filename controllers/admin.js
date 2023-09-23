@@ -3,7 +3,7 @@ const Product = require("../models/product")
 
 exports.getAdminProducts = async (req,res,next) => {
   try {
-    const products = await Product.find().populate('userId', 'username')
+    const products = await Product.find({userId : req.user._id}).populate('userId', 'username')
     res.render('admin/products', {
       prods: products,
       pageTitle: 'Admin Products',
@@ -28,7 +28,7 @@ exports.postAddProduct = async(req, res, next) => {
   const imageUrl = req.body.imageUrl
   const price = req.body.price
   const description = req.body.description
-  const product = new Product({title: title,price: price,description: description,imageUrl: imageUrl, userId: req.user})
+  const product = new Product({title: title,price: price,description: description,imageUrl: imageUrl, userId: req.session.user})
   try {
     await product.save()
   } catch (err) {
@@ -60,6 +60,9 @@ exports.postEditProduct = async (req, res, next) => {
 
   try {
     const product = await Product.findById(prodId)
+    if (product.userId.toString() !== req.user._id.toString()) {
+      return res.redirect('/')
+    }
     product.title = updatedTitle
     product.imageUrl = updatedImageUrl
     product.price = updatedPrice
@@ -74,7 +77,7 @@ exports.postEditProduct = async (req, res, next) => {
 exports.postDeleteProduct = async (req,res,next) => {
   const prodId = req.body.productId;
   try {
-    await Product.findOneAndDelete(prodId)
+    await Product.deleteOne({_id: prodId, userId: req.user._id})
   } catch (err) {
     console.log(err)
   }
